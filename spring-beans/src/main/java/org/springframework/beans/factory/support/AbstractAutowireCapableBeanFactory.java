@@ -175,7 +175,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		super();
 		ignoreDependencyInterface(BeanNameAware.class);
 		ignoreDependencyInterface(BeanFactoryAware.class);
-		ignoreDependencyInterface(BeanClassLoaderAware.class);
+ 		ignoreDependencyInterface(BeanClassLoaderAware.class);
 	}
 
 	/**

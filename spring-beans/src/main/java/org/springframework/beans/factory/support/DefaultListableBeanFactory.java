@@ -921,10 +921,10 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 			catch (BeanDefinitionValidationException ex) {
 				throw new BeanDefinitionStoreException(beanDefinition.getResourceDescription(), beanName,
 						"Validation of bean definition failed", ex);
-			}
+ 			}
 		}
 
-		BeanDefinition existingDefinition = this.beanDefinitionMap.get(beanName);
+   		BeanDefinition existingDefinition = this.beanDefinitionMap.get(beanName);
 		if (existingDefinition != null) {
 			if (!isAllowBeanDefinitionOverriding()) {
 				throw new BeanDefinitionOverrideException(beanName, beanDefinition, existingDefinition);

@@ -396,7 +396,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		}
 
 		// Multicast right now if possible - or lazily once the multicaster is initialized
-		if (this.earlyApplicationEvents != null) {
+ 		if (this.earlyApplicationEvents != null) {
 			this.earlyApplicationEvents.add(applicationEvent);
 		}
 		else {
@@ -482,6 +482,10 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		}
 	}
 
+	/**
+	 * 添加Bean工厂后置处理器
+	 * @param postProcessor the factory processor to register
+	 */
 	@Override
 	public void addBeanFactoryPostProcessor(BeanFactoryPostProcessor postProcessor) {
 		Assert.notNull(postProcessor, "BeanFactoryPostProcessor must not be null");
@@ -489,6 +493,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	}
 
 	/**
+	 * 返回将应用到内部BeanFactory的BeanFactoryPostProcessors列表。
 	 * Return the list of BeanFactoryPostProcessors that will get applied
 	 * to the internal BeanFactory.
 	 */
@@ -496,6 +501,10 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		return this.beanFactoryPostProcessors;
 	}
 
+	/**
+	 * 添加应用上下文监听器
+	 * @param listener the ApplicationListener to register
+	 */
 	@Override
 	public void addApplicationListener(ApplicationListener<?> listener) {
 		Assert.notNull(listener, "ApplicationListener must not be null");
@@ -506,17 +515,26 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	}
 
 	/**
+	 * 返回静态指定的ApplicationListeners集合.
 	 * Return the list of statically specified ApplicationListeners.
 	 */
 	public Collection<ApplicationListener<?>> getApplicationListeners() {
 		return this.applicationListeners;
 	}
 
+	/**
+	 * 加载或刷新一个持久化的配置，可能是XML文件、属性文件或关系数据库模式。
+	 * 由于这是一种启动方法，如果失败，应该销毁已经创建的单例，以避免悬空资源。
+	 * 换句话说，在调用该方法之后，要么全部实例化，要么完全不实例化。
+	 * @throws BeansException 如果bean工厂无法初始化，则抛出 BeansException 异常
+	 * @throws IllegalStateException 如果已经初始化且不支持多次刷新，则会抛出 IllegalStateException 异常
+	 */
 	@Override
 	public void refresh() throws BeansException, IllegalStateException {
+		// 给容器refresh加锁，避免容器处在refresh阶段时，容器进行了初始化或者销毁的操作
 		synchronized (this.startupShutdownMonitor) {
 			// Prepare this context for refreshing.
-			prepareRefresh();
+  			prepareRefresh();
 
 			// Tell the subclass to refresh the internal bean factory.
 			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
@@ -528,6 +546,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				// Allows post-processing of the bean factory in context subclasses.
 				postProcessBeanFactory(beanFactory);
 
+				// 调用容器的后置处理器
 				// Invoke factory processors registered as beans in the context.
 				invokeBeanFactoryPostProcessors(beanFactory);
 
@@ -578,6 +597,8 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	}
 
 	/**
+	 * 准备此上下文以进行刷新，设置其启动日期和活动标志以及执行属性源的任何初始化。
+	 *
 	 * Prepare this context for refreshing, setting its startup date and
 	 * active flag as well as performing any initialization of property sources.
 	 */
@@ -747,7 +768,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 			// Use empty MessageSource to be able to accept getMessage calls.
 			DelegatingMessageSource dms = new DelegatingMessageSource();
 			dms.setParentMessageSource(getInternalParentMessageSource());
-			this.messageSource = dms;
+ 			this.messageSource = dms;
 			beanFactory.registerSingleton(MESSAGE_SOURCE_BEAN_NAME, this.messageSource);
 			if (logger.isTraceEnabled()) {
 				logger.trace("No '" + MESSAGE_SOURCE_BEAN_NAME + "' bean, using [" + this.messageSource + "]");

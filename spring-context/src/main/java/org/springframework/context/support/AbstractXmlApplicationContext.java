@@ -127,7 +127,7 @@ public abstract class AbstractXmlApplicationContext extends AbstractRefreshableC
 		if (configLocations != null) {
 			reader.loadBeanDefinitions(configLocations);
 		}
-	}
+ 	}
 
 	/**
 	 * Return an array of Resource objects, referring to the XML bean definition

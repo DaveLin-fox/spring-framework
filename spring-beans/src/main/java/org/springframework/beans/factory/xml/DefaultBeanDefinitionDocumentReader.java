@@ -170,10 +170,10 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 			NodeList nl = root.getChildNodes();
 			for (int i = 0; i < nl.getLength(); i++) {
 				Node node = nl.item(i);
-				if (node instanceof Element) {
+ 				if (node instanceof Element) {
 					Element ele = (Element) node;
 					if (delegate.isDefaultNamespace(ele)) {
-						parseDefaultElement(ele, delegate);
+ 						parseDefaultElement(ele, delegate);
 					}
 					else {
 						delegate.parseCustomElement(ele);
@@ -200,7 +200,7 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 			// recurse
 			doRegisterBeanDefinitions(ele);
 		}
-	}
+ 	}
 
 	/**
 	 * Parse an "import" element and load the bean definitions
@@ -315,7 +315,7 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 						bdHolder.getBeanName() + "'", ele, ex);
 			}
 			// Send registration event.
-			getReaderContext().fireComponentRegistered(new BeanComponentDefinition(bdHolder));
+ 			getReaderContext().fireComponentRegistered(new BeanComponentDefinition(bdHolder));
 		}
 	}
 

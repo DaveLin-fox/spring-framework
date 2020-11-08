@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+	<bean id="student" class="top.linxu.ioc.xml.Student">
+		<constructor-arg index="0" value="dave"/>
+		<constructor-arg index="1" value="29"/>
+<!--		<property name="name" value="dave"/>-->
+<!--		<property name="age" value="12"/>-->
+		<property name="classList">
+			<list>
+				<value>数学</value>
+				<value>英语</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="helloService" class="top.linxu.ioc.xml.HelloService">
+		<property name="student" ref="student"/>
+	</bean>
+</beans>

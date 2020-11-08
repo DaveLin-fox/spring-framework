@@ -1416,8 +1416,8 @@ public class BeanDefinitionParserDelegate {
 		// Decorate based on custom attributes first.
 		NamedNodeMap attributes = ele.getAttributes();
 		for (int i = 0; i < attributes.getLength(); i++) {
-			Node node = attributes.item(i);
-			finalDefinition = decorateIfRequired(node, finalDefinition, containingBd);
+ 			Node node = attributes.item(i);
+ 			finalDefinition = decorateIfRequired(node, finalDefinition, containingBd);
 		}
 
 		// Decorate based on custom nested elements.
